@@ -7,6 +7,12 @@ const getMain = async (req, res) => {
   res.send("hola mundo");
 };
 
+const postSi = async(req,res)=>{
+  res.json({
+    mensaje:'estoy respondiendo'
+  })
+}
+
 const postLogin = async (req, res) => {
   const status = await userService.loginUser(req.body);
   if (status.status == 202) {
@@ -85,4 +91,5 @@ module.exports = {
   getVotos,
   getMain,
   getEstadisticas,
+  postSi
 };
