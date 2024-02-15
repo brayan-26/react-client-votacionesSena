@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { loginRequest } from "../api/auths";
+import { loginRequest, voto } from "../api/auths";
 
 export const AuthContext = createContext();
 
@@ -21,21 +21,31 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       setIsAuthentcated(true);
       const resStatus = res.status;
-      return { resStatus: resStatus };
+      return { resStatus: resStatus, res: res };
     } catch (error) {
       if (error.response) {
         const errData = error.response.data;
         const errResponse = error.response.status;
         return { errData: errData, errResponse: errResponse };
-      }else{
-        console.log(error)
+      } else {
+        console.log(error);
       }
+    }
+  };
+
+  const votos = async (user) => {
+    try {
+      const res = await voto(user);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
     <AuthContext.Provider
       value={{
         signin,
+        votos, 
         user,
         isAuthentcated,
       }}

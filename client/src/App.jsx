@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./page/loginPage";
+import VotoPage from "./page/VotoPage"
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRouters from "./ProtectedRouters";
 
@@ -13,7 +14,7 @@ function App() {
 
           {/* rutas protegidas  */}
           <Route element={<ProtectedRouters />}>
-            <Route path="/main" element={<p>melo</p>} />
+            <Route path="/voto" element={<VotoPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>

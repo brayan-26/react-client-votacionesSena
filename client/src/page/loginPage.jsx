@@ -18,9 +18,12 @@ function LoginPage() {
     try {
       const results = await signin(values);
       if (results.resStatus === 202) {
-        navegate("/main");
+        const token = results.res.data.token;
+        // envio el token a la pagina de voto
+        console.log(token)
+        navegate("/voto", { state: { token } });
       } else {
-        if (results.errResponse === 404) {
+        if (results.errResponse !== 200) {
           const errorMessage = results.errData;
           setMensaje(errorMessage);
           navegate("/");
@@ -35,9 +38,9 @@ function LoginPage() {
     <div>
       <form onSubmit={onSubmit}>
         <input type="number" {...register("cedula", { required: true })} />
-        {errors.cedula && <p>sgudfsh chd</p>}
+        {errors.cedula && <p>Ingrese su cedula</p>}
         <input type="number" {...register("ficha", { required: true })} />
-        {errors.ficha && <p>sgudfsh chd</p>}
+        {errors.ficha && <p>Ingrese el numero de ficha </p>}
 
         {/* mensaje del back-end */}
         {mensaje && <p>{mensaje}</p>}
