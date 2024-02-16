@@ -9,20 +9,16 @@ function voto() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navegate = useNavigate();
   const { state } = useLocation();
-  const tokenForm = state?.token;
+  const token = state?.token;
+  console.log(token)
 
   const { votos } = useAuth();
-  // const [mensaje, setMensaje] = useState(null);
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      console.log("boton", values);
-      // console.log("token", tokenForm )
-
-      // const results = await votos(values);
-      // console.log(results);
+      const results = await votos(token, values);
+      console.log(results);
     } catch (error) {
       console.log(error);
     }
@@ -34,19 +30,20 @@ function voto() {
         <input
           type="radio"
           value={1}
-          {...register("candidatoId", { required: true })}
+          {...register("candidatoID", { required: true })}
         />
         <input
           type="radio"
           value={2}
-          {...register("candidatoId", { required: true })}
+          {...register("candidatoID", { required: true })}
         />
         <input
           type="radio"
           value={3}
-          {...register("candidatoId", { required: true })}
+          {...register("candidatoID", { required: true })}
         />
-        <button type="submit" value={1}>enviar</button>
+        <input type="text" {...register("token", { required: true })} />
+        <button type="submit">Enviar</button>
       </form>
     </div>
   );
