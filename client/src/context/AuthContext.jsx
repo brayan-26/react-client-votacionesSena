@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
+      const resStatus = res.status;
       setUser(res.data);
       setIsAuthentcated(true);
-      const resStatus = res.status;
       return { resStatus: resStatus, res: res };
     } catch (error) {
       if (error.response) {

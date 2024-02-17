@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
+
 function voto() {
   const {
     register,
@@ -11,14 +12,15 @@ function voto() {
   } = useForm();
   const { state } = useLocation();
   const token = state?.token;
-  console.log(token)
 
   const { votos } = useAuth();
 
   const onSubmit = handleSubmit(async (values) => {
     try {
       const results = await votos(token, values);
-      console.log(results);
+      console.log(values)
+      console.log("resultados", results);
+
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +44,7 @@ function voto() {
           value={3}
           {...register("candidatoID", { required: true })}
         />
-        <input type="text" {...register("token", { required: true })} />
+    
         <button type="submit">Enviar</button>
       </form>
     </div>

@@ -19,8 +19,6 @@ function LoginPage() {
       const results = await signin(values);
       if (results.resStatus === 202) {
         const token = results.res.data.token;
-        // envio el token a la pagina de voto
-        console.log(token)
         navegate("/voto", { state: { token } });
       } else {
         if (results.errResponse !== 200) {

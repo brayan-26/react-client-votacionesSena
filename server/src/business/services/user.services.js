@@ -80,31 +80,48 @@ const loginUser = async (info) => {
 };
 
 const verifyVoto = async (data) => {
+  //se llama el repositorio del usuario para llamar la funcion de obtener la jornadad pero esta vez del candidato recibe la jornada del aprendiz logeado
   const jornada = await userRepository.getCandidatoJornada([data.candidatoID]);
+  console.log(jornada)
   if (jornada) {
+    //si la consula fue exitosa obtiene los resultados de esta
+    if(!jornada[0][0] != undefined){
+      //pregunta si la devolvio algo la consulta y si es distinto de vacio si no es asi es por que metio un id del candidato que no existe
+      return { message: "no existe ese candidato", status: 404 };
+      //se envia el mensaje de error y el status
+    }else{
     if (jornada[0][0].jornada == data.jornadaID) {
+      //si existen resultados compara con la jornada que obtubo del candidato con la jornada del aprendiz logeado
       const voto = await userRepository.getFecha([data.userID]);
+      //llama al repositorio del usuario para usar la funcion de obtener fecha para verificar si existe ya el voto
       if (voto) {
+        //en caso de que la consulta sea exitosa pregunta si existen resultados
         if (voto[0].length > 0) {
+          //si existen resultados devuelve el mensaje de error puesto que ya hay un voto asociado entre el aprendiz logeado
           return {
             message: "la persona ya voto",
             fecha: voto[0][0].fecha,
             status: 400,
           };
         } else {
+          //en caso de que no exista un voto asociado le da un mensaje de exito y el codigo de status
           return { message: "la persona puede votar", status: 200 };
         }
       } else {
+        //en caso de que la consulta no devuelva nada manda mensaje de error del servidor y el codigo de status
         return { message: "error interno del servidor", status: 500 };
       }
     } else {
+      //en caso de que las jornadas del usuario y la jornada del candidato no sean las mismas, se envia el emnsaje de error y el codigo de status
       return {
         message:
           "se esta votanto de otra jornada que no es la del usuario logeado",
         status: 400,
       };
     }
+  }
   } else {
+      //en caso de que la consulta no devuelva nada manda mensaje de error del servidor y el codigo de status
     return { message: "error interno del servidor", status: 500 };
   }
 };
