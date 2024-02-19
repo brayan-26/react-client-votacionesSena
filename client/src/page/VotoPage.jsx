@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
+import Card from "../../dataCandidatos/Card";
+import candidatos from "../../dataCandidatos/candidatos";
 import { useNavigate, useLocation } from "react-router-dom";
 
-
 function voto() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const renderCandidatos = candidatos.map((c) => {
+    return (
+      <Card
+        key={c.name}
+        nombre={c.name}
+        propuesta={c.propuesta}
+        imagen={c.img}
+        id={c.id}
+      />
+    );
+  });
+  const { register, handleSubmit } = useForm();
   const { state } = useLocation();
   const token = state?.token;
 
@@ -17,10 +25,8 @@ function voto() {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const results = await votos(token, values);
       console.log(values)
-      console.log("resultados", results);
-
+      
     } catch (error) {
       console.log(error);
     }
@@ -29,22 +35,7 @@ function voto() {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input
-          type="radio"
-          value={1}
-          {...register("candidatoID", { required: true })}
-        />
-        <input
-          type="radio"
-          value={2}
-          {...register("candidatoID", { required: true })}
-        />
-        <input
-          type="radio"
-          value={3}
-          {...register("candidatoID", { required: true })}
-        />
-    
+        {renderCandidatos}
         <button type="submit">Enviar</button>
       </form>
     </div>

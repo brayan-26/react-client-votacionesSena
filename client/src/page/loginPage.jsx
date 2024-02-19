@@ -3,16 +3,20 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+import "../public/style/style.css";
+
 function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
   const navegate = useNavigate();
 
   const { signin } = useAuth();
   const [mensaje, setMensaje] = useState(null);
+  const cerrarVentanaEmergente = () => {
+    setMensaje(false);
+  };
 
   const onSubmit = handleSubmit(async (values) => {
     try {
@@ -24,6 +28,9 @@ function LoginPage() {
         if (results.errResponse !== 200) {
           const errorMessage = results.errData;
           setMensaje(errorMessage);
+          if (errors.cedula) {
+            console.log("paila");
+          }
           navegate("/");
         }
       }
@@ -33,18 +40,27 @@ function LoginPage() {
   });
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input type="number" {...register("cedula", { required: true })} />
-        {errors.cedula && <p>Ingrese su cedula</p>}
-        <input type="number" {...register("ficha", { required: true })} />
-        {errors.ficha && <p>Ingrese el numero de ficha </p>}
-
-        {/* mensaje del back-end */}
-        {mensaje && <p>{mensaje}</p>}
-        <button type="submit">Iniciar sesión</button>
-      </form>
-    </div>
+    <body className="Body-login">
+      <div className="container-login">
+        <div className="container-form">
+          <form onSubmit={onSubmit}>
+            <p>Ingrese su numero de cedula</p>
+            <input type="number" {...register("cedula", { required: true })} />
+            <p>Ingrese su numero de ficha</p>
+            <input type="number" {...register("ficha", { required: true })} />
+            <button type="submit">Iniciar sesión</button>
+          </form>
+          {mensaje && (
+            <div className="container-mensaje">
+              <div className="mensaje">
+                <p>Ficha o numero de cudula erroneo</p>
+                <button onClick={cerrarVentanaEmergente}>Close</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </body>
   );
 }
 
