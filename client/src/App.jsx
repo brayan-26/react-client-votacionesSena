@@ -12,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          {/* <Route path="/" element={<VotoPage />} /> */}
 
           {/* rutas protegidas  */}
           <Route element={<ProtectedRouters />}>

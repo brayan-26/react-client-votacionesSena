@@ -82,10 +82,9 @@ const loginUser = async (info) => {
 const verifyVoto = async (data) => {
   //se llama el repositorio del usuario para llamar la funcion de obtener la jornadad pero esta vez del candidato recibe la jornada del aprendiz logeado
   const jornada = await userRepository.getCandidatoJornada([data.candidatoID]);
-  console.log(jornada)
   if (jornada) {
     //si la consula fue exitosa obtiene los resultados de esta
-    if(!jornada[0][0] != undefined){
+    if(!jornada[0].length > 0){
       //pregunta si la devolvio algo la consulta y si es distinto de vacio si no es asi es por que metio un id del candidato que no existe
       return { message: "no existe ese candidato", status: 404 };
       //se envia el mensaje de error y el status

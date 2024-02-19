@@ -33,10 +33,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const votos = async (user) => {
+  const votos = async (token,user) => {
     try {
-      const res = await voto(user);
-      console.log(res);
+      const result = await voto(token,user);
+      console.log(result)
     } catch (error) {
       console.log(error);
     }

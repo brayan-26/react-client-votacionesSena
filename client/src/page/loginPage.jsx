@@ -6,10 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../public/style/style.css";
 
 function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const navegate = useNavigate();
 
   const { signin } = useAuth();

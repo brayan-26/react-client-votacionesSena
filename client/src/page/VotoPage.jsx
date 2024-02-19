@@ -1,47 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import Card from "../../dataCandidatos/Card";
-import candidatos from "../../dataCandidatos/candidatos";
 import { useNavigate, useLocation } from "react-router-dom";
+import candidatos from "../../dataCandidatos/candidatos";
 
-function voto() {
+function VotoPage() {
   const { register, handleSubmit } = useForm();
   const { state } = useLocation();
   const token = state?.token;
-
   const { votos } = useAuth();
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = async(dato) => {
     try {
-      console.log(values.id);
+    
+      const results = await votos(token, dato);
+      console.log(results)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  });
-
-  const handleVoteClick = (id) => {
-    // Al hacer clic en el botón, establece el id en los datos del formulario
-    onSubmit({ id });
   };
-
-  const renderCandidatos = candidatos.map((c) => {
-    return (
-      <Card
-        key={c.name}
-        nombre={c.name}
-        propuesta={c.propuesta}
-        imagen={c.img}
-        id={c.id}
-        onVoteClick={handleVoteClick}
-      />
-    );
-  });
-  return (
-    <div>
-      <form onSubmit={onSubmit}>{renderCandidatos}</form>
+  const renderCandidatos = candidatos.map((c) => (
+    <div className="class" key={c.name}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="container-card">
+          <h2>{c.name}</h2>
+          <p>{c.propuesta}</p>
+          <p>{c.img}</p>
+          <button
+            type="button"
+            {...register("candidatoID")}
+            onClick={() => onSubmit(c.id)}
+          >
+            subir
+          </button>
+        </div>
+      </form>
     </div>
-  );
+  ));
+
+  return <div>{renderCandidatos}</div>;
 }
 
-export default voto;
+export default VotoPage;

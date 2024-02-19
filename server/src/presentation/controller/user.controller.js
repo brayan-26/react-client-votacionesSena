@@ -49,6 +49,7 @@ const postLogin = async (req, res) => {
 
 const getVotos = async (req, res) => {
   if (req.result.rol == "user") {
+
     const candidatoID = req.body.candidatoID;
 
     const userID = parseInt(req.result.userID);
