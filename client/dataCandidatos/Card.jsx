@@ -6,7 +6,9 @@ function Card({ nombre, propuesta, imagen, id }) {
         <h2>{nombre}</h2>
         <p>{propuesta}</p>
         <p>{imagen}</p>
-        <input type="radio" value={id} name="id"/>
+        <button type="button" onClick={() => onVoteClick(id)}>
+          subir
+        </button>
       </div>
     </div>
   );

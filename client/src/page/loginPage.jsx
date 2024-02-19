@@ -28,9 +28,6 @@ function LoginPage() {
         if (results.errResponse !== 200) {
           const errorMessage = results.errData;
           setMensaje(errorMessage);
-          if (errors.cedula) {
-            console.log("paila");
-          }
           navegate("/");
         }
       }
@@ -40,7 +37,7 @@ function LoginPage() {
   });
 
   return (
-    <body className="Body-login">
+    <div className="Body-login">
       <div className="container-login">
         <div className="container-form">
           <form onSubmit={onSubmit}>
@@ -60,7 +57,7 @@ function LoginPage() {
           )}
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 
