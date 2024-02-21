@@ -18,14 +18,13 @@ export const AuthProvider = ({ children }) => {
   const singIn = async (values) => {
     try {
       const results = await loginRequest(values);
-      // const token = results.headers.authorization;
-      console.log(results.headers)
-      // const tokenValue = token.substring(7);
-      // const resultSatus = results.status;
+      const token = results.headers.authorization;
+      const tokenValue = token.substring(7);
+      const resultSatus = results.status;
       setUser(results.data);
       setIsAuthenticated(true);
        
-      // return { resultSatus: resultSatus, token: tokenValue };
+      return { resultSatus: resultSatus, token: tokenValue };
     } catch (error) {
       if (error.response) {
         const errorData = error.response.data;

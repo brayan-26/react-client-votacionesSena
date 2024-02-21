@@ -8,7 +8,7 @@ function LoginPage() {
   const { register, handleSubmit } = useForm();
   const navegate = useNavigate();
   const { singIn } = useAuth();
-  // const {} =
+  const [ mensaje, setMensaje ] = useState(null);
 
   const onSubmit = handleSubmit(async (values) => {
     try {
@@ -30,11 +30,13 @@ function LoginPage() {
       }
       if (result.errorData) {
         if (result.errorResponse === 500) {
-          console.log("error server");
+
+          setMensaje(result.errorData);
           navegate("/");
         }
         if (result.errorResponse === 400) {
-          console.log(result.errorData);
+          setMensaje(result.errorData);
+          navegate("/");
         }
       }
 
@@ -50,6 +52,7 @@ function LoginPage() {
         <input type="text" {...register("cedula", { required: true })} />
         <input type="text" {...register("ficha", { required: true })} />
         <button type="submit">Iniciar sesión</button>
+        {mensaje && <p>{mensaje}</p>}
       </form>
     </div>
   );
