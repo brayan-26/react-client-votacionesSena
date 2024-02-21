@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 // Se define la URL base del servidor back-end
 const API = "http://localhost:8080";
 

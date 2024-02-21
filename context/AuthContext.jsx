@@ -12,13 +12,20 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  
+  const [user, setUser] = useState(null);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const singIn = async (values) => {
     try {
       const results = await loginRequest(values);
-      console.log(results);
-      return {results: results}
-
+      // const token = results.headers.authorization;
+      console.log(results.headers)
+      // const tokenValue = token.substring(7);
+      // const resultSatus = results.status;
+      setUser(results.data);
+      setIsAuthenticated(true);
+       
+      // return { resultSatus: resultSatus, token: tokenValue };
     } catch (error) {
       if (error.response) {
         const errorData = error.response.data;
@@ -34,6 +41,9 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         singIn,
+        user,
+        isAuthenticated,
+        setUser,
       }}
     >
       {children}
