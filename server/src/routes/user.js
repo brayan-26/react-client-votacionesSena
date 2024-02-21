@@ -1,14 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const  {postLogin,getMain,getVotos,getEstadisticas,postSi} = require('../presentation/controller/user.controller')
+const {postLogin,postVotos,getCandidatos,getEstadisticas} = require('../presentation/controller/user.controller')
 const {validarToken} = require('../middlewares/auth.middleware')
 
-router.post('/api/user/login',postLogin)
-    .post('/api/user/votos',validarToken,getVotos)
-    .get('/api/estadisticas',validarToken,getEstadisticas)
-    .get('/',getMain)
-    .post('/si',postSi)
+router.post('/login',postLogin) //ruta para iniciar sesion como aprendiz o administrador
+    .get('/candidatos',validarToken,getCandidatos)
+    .post('/votos',validarToken,postVotos) //ruta para que el aprendiz vote
+    .get('/estadisticas',validarToken,getEstadisticas)
+ 
 
-
-
+ 
 module.exports = router 
