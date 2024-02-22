@@ -1,0 +1,10 @@
+.container-datos{
+    display: flex;
+}
+.container{
+    background-color: red;
+    color: black;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+}
